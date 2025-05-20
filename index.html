@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CodeTantra Banking App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f2f6fc;
+    }
+
+    nav {
+      background-color: #003366;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 15px;
+    }
+
+    .form-card, .info-card {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #003366;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    input[type="text"], input[type="password"], select, input[type="number"] {
+      padding: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #003366;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0055a5;
+    }
+
+    .link-group {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .link-group a {
+      color: #003366;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .nav-btns a {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .welcome-box {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      margin: 60px auto;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 140px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+      border-radius: 6px;
+    }
+
+    .dropdown-content a {
+      color: #003366;
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f0f0f0;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown > a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px;
+      display: inline-block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #003366;
+      color: white;
+    }
+
+    .card-image {
+      max-width: 200px;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .button-group button {
+      width: 50%;
+    }
+
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .button-group button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Public Navbar -->
+  <nav id="public-navbar">
+    <div>
+      <a onclick="navigate('login')">Login</a>
+      <a onclick="navigate('signup')">Sign Up</a>
+    </div>
+    <div>
+      <a onclick="navigate('about')">About Us</a>
+      <a onclick="navigate('contact')">Contact Us</a>
+    </div>
+  </nav>
+
+  <!-- Private Navbar -->
+  <nav id="private-navbar" class="hidden">
+    <div class="nav-btns">
+      <div class="dropdown">
+        <a>Accounts ▾</a>
+        <div class="dropdown-content">
+          <a onclick="navigate('accounts-savings')">Savings</a>
+          <a onclick="navigate('accounts-current')">Current</a>
+          <a onclick="navigate('accounts-salary')">Salary</a>
+        </div>
+      </div>
+      <a onclick="navigate('balance')">Check Balance</a>
+      <a onclick="navigate('deposits')">Deposits</a>
+      <a onclick="navigate('cards')">Cards</a>
+    </div>
+    <div class="nav-btns">
+      <a onclick="navigate('logout')">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Login Page -->
+  <div class="container" id="login-page">
+    <div class="form-card">
+      <h2>Login</h2>
+      <div class="form-group"><input type="text" placeholder="Username" id="username"></div>
+      <div class="form-group"><input type="password" placeholder="Password" id="password"></div>
+      <div class="form-group"><button onclick="login()">Login</button></div>
+      <div class="link-group">
+        <a onclick="navigate('signup')">Sign Up / New User Registration</a><br>
+        <a onclick="navigate('forgot')">Forgot Password</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signup -->
+  <div class="container hidden" id="signup-page">
+    <div class="form-card">
+      <h2>Create an Account</h2>
+      <div class="form-group"><input type="text" placeholder="Choose Username" id="new-username"></div>
+      <div class="form-group"><input type="password" placeholder="Choose Password" id="new-password"></div>
+      <div class="form-group"><button onclick="signup()">Register</button></div>
+      <div class="link-group"><a onclick="navigate('login')">← Back to Login</a></div>
+    </div>
+  </div>
+
+  <!-- Forgot Password -->
+  <div class="container hidden" id="forgot-page">
+    <div class="form-card">
+      <h2>Forgot Password</h2>
+      <div class="form-group"><input type="text" placeholder="Enter your username" id="forgot-username"></div>
+      <div class="form-group"><button onclick="recoverPassword()">Recover Password</button></div>
+      <div class="link-group"><a onclick="navigate('login')">← Back to Login</a></div>
+    </div>
+  </div>
+
+  <!-- Home Page -->
+  <div class="container hidden" id="home-page">
+    <div class="welcome-box">
+      <h2>Welcome to CodeTantra Bank!</h2>
+      <p>Use the navigation bar to access different banking features.</p>
+    </div>
+  </div>
+
+  <!-- Balance Page -->
+  <div class="container hidden" id="balance-page">
+    <div class="info-card">
+      <h2>Check Balance</h2>
+      <div class="form-group">
+        <label for="account-select">Select Account Number:</label>
+        <select id="account-select" onchange="checkBalance()">
+          <option value="">-- Choose Account --</option>
+        </select>
+      </div>
+      <div id="balance-result" style="margin-top: 15px; font-weight: bold;"></div>
+      <div id="popup-message" style="margin-top: 10px;"></div>
+      <div id="print-option" class="form-group" style="margin-top: 20px; display: none;">
+        <label><input type="radio" name="print-statement" onclick="printStatement()"> Print Statement</label>
+        <div id="statement-message" style="margin-top: 10px; color: #888;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deposits Page -->
+  <div class="container hidden" id="deposits-page">
+    <div class="info-card">
+      <h2>Deposits</h2>
+      <p>Select the type of deposit you want to make and fill in the details.</p>
+      <div>
+        <label><input type="radio" name="deposit-type" id="fixed-deposit" onclick="toggleDepositFields('fixed')"> Fixed Deposit</label>
+        <label><input type="radio" name="deposit-type" id="recurring-deposit" onclick="toggleDepositFields('recurring')"> Recurring Deposit</label>
+      </div>
+      <div id="deposit-fields" style="display: none; margin-top: 20px;">
+        <div class="form-group">
+          <label for="deposit-account-select">Select Account Number:</label>
+          <select id="deposit-account-select">
+            <option value="">-- Choose Account --</option>
+          </select>
+        </div>
+        <div>
+          <label for="deposit-amount">Amount:</label>
+          <input type="number" id="deposit-amount" placeholder="Enter amount" />
+        </div>
+        <label for="timespan">Time Span: <span style="font-size: 12px;">(Only digits 1 to 5 accepted)</span></label>
+        <input type="text" id="timespan" name="timespan" placeholder="Enter time span" onblur="validateTimeSpan()" />
+        <br>
+        <input type="checkbox" id="agreeTerms" name="agreeTerms">
+        <label for="agreeTerms">I agree to the terms and conditions</label>
+        <div class="form-group">
+          <button onclick="depositAmount()">Deposit</button>
+        </div>
+        <p id="deposit-message" style="color: green; font-weight: bold;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cards Page -->
+  <div class="container hidden" id="cards-page">
+    <div class="info-card">
+      <h2>Cards</h2>
+      <p>Select card type:</p>
+      <div class="form-group">
+        <label><input type="radio" name="card-type" value="credit" onclick="showCardOptions()"> Credit Card</label>
+        <label><input type="radio" name="card-type" value="debit" onclick="showCardOptions()"> Debit Card</label>
+      </div>
+
+      <!-- Credit Card Section -->
+      <div id="creditCardOptions" style="display: none;">
+        <h3>Credit Card Options</h3>
+        <select id="credit-card-select" onchange="showCreditCardDetails()">
+          <option value="">-- Select Credit Card --</option>
+          <option value="premium">Premium Credit Card</option>
+          <option value="platinum">Platinum Credit Card</option>
+        </select>
+        <div id="credit-card-details" style="margin-top: 20px;"></div>
+      </div>
+
+      <!-- Debit Card Section -->
+      <div id="debitCardOptions" style="display: none;">
+        <h3>Debit Card Options</h3>
+        <div class="form-group">
+          <label><input type="radio" name="debit-action" value="view" onclick="showDebitOptions()"> View Card</label>
+          <label><input type="radio" name="debit-action" value="apply" onclick="showDebitOptions()"> Apply New Card</label>
+        </div>
+        <div id="debit-view-section" style="display: none;">
+          <select id="debit-account-select" onchange="showDebitCardDetails()">
+            <option value="">-- Choose Account --</option>
+          </select>
+          <div id="debit-card-details" style="margin-top: 20px;"></div>
+          <button id="debit-ok-button" style="display: none;" onclick="closeDebitDetails()">OK</button>
+        </div>
+        <div id="debit-apply-section" style="display: none;">
+          <select id="debit-apply-account-select" onchange="checkDebitCardStatus()">
+            <option value="">-- Choose Account --</option>
+          </select>
+          <div id="debit-status-message" style="margin-top: 10px; font-weight: bold;"></div>
+          <div class="form-group">
+            <input type="checkbox" id="debit-terms" name="debit-terms">
+            <label for="debit-terms">I agree to the terms and conditions</label>
+          </div>
+          <div class="form-group">
+            <input type="checkbox" id="debit-fee" name="debit-fee">
+            <label for="debit-fee">Pay ₹368 and grab your card</label>
+          </div>
+          <div class="button-group">
+            <button id="apply-button" onclick="applyDebitCard()">Apply</button>
+            <button id="cancel-button" onclick="cancelDebitCard()">Cancel</button>
+          </div>
+          <p id="debit-message" style="margin-top: 10px; font-weight: bold;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Other Static Pages -->
+  <div class="container hidden" id="accounts-select-page">
+    <!-- <div class="info-card"><h2>Select Account</h2><p>Please choose your account type.</p></div> -->
+  </div>
+  <div class="container hidden" id="accounts-savings-page">
+    <div class="info-card"><h2>Savings Account</h2><p>Details about your savings account will appear here.</p></div>
+  </div>
+  <div class="container hidden" id="accounts-current-page">
+    <div class="info-card"><h2>Current Account</h2><p>Details about your current account will appear here.</p></div>
+  </div>
+  <div class="container hidden" id="accounts-salary-page">
+    <div class="info-card"><h2>Salary Account</h2><p>Details about your salary account will appear here.</p></div>
+  </div>
+  <div class="container hidden" id="about-page">
+    <div class="info-card"><h2>About CodeTantra Bank</h2><p>We deliver secure digital banking experiences. Access accounts, apply for loans, and manage finances online.</p></div>
+  </div>
+  <div class="container hidden" id="contact-page">
+    <div class="info-card"><h2>Contact Us</h2><p>Email: support@codetantrabank.com<br>Phone: +91-9876543210<br>Address: 123 Fintech Avenue, Hyderabad, India</p></div>
+  </div>
+
+  <!-- JavaScript Section -->
+  <script>
+    let users = { admin: "admin@123" }; // Static credentials
+
+    const accountData = {
+      savings: Array.from({length: 10}, (_, i) => ({
+        name: `Savings User ${i + 1}`,
+        acNo: `SB10${i + 1}`,
+        createdOn: '2022-01-01',
+        balance: Math.floor(Math.random() * 20000),
+        hasDebitCard: i === 0 || i === 2 || i === 4 // SB101, SB103, SB105 have debit cards
+      })),
+      current: Array.from({length: 10}, (_, i) => ({
+        name: `Current User ${i + 1}`,
+        acNo: `CR20${i + 1}`,
+        createdOn: '2021-05-10',
+        balance: Math.floor(Math.random() * 40000),
+        hasDebitCard: i === 1 || i === 3 // CR202, CR204 have debit cards
+      })),
+      salary: Array.from({length: 10}, (_, i) => ({
+        name: `Salary User ${i + 1}`,
+        acNo: `SA30${i + 1}`,
+        createdOn: '2023-03-20',
+        balance: Math.floor(Math.random() * 30000),
+        hasDebitCard: i === 0 // SA301 has debit card
+      }))
+    };
+
+    const allAccounts = [...accountData.savings, ...accountData.current, ...accountData.salary];
+
+    // Five specific accounts for Apply New Card
+    const applyCardAccounts = [
+      { name: "Savings User 1", acNo: "SB101", createdOn: "2022-01-01", balance: 15000, hasDebitCard: true },
+      { name: "Current User 2", acNo: "CR202", createdOn: "2021-05-10", balance: 25000, hasDebitCard: true },
+      { name: "Salary User 1", acNo: "SA301", createdOn: "2023-03-20", balance: 30000, hasDebitCard: true },
+      { name: "Savings User 2", acNo: "SB102", createdOn: "2022-01-01", balance: 12000, hasDebitCard: false },
+      { name: "Current User 3", acNo: "CR203", createdOn: "2021-05-10", balance: 18000, hasDebitCard: false }
+    ];
+
+    function showNavbars(isPrivate) {
+      document.getElementById('public-navbar').classList.toggle('hidden', isPrivate);
+      document.getElementById('private-navbar').classList.toggle('hidden', !isPrivate);
+    }
+
+    function validateTimeSpan() {
+      const input = document.getElementById("timespan").value.trim();
+      const num = parseInt(input);
+      if (!/^[0-5]$/.test(input) || num < 1 || num > 5) {
+        alert("Please enter valid number 1 to 5");
+        document.getElementById("timespan").value = "";
+      }
+    }
+
+    function navigate(page) {
+      document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+
+      const pages = {
+        login: 'login-page',
+        signup: 'signup-page',
+        forgot: 'forgot-page',
+        home: 'home-page',
+        'accounts-select': 'accounts-select-page',
+        'accounts-savings': 'accounts-savings-page',
+        'accounts-current': 'accounts-current-page',
+        'accounts-salary': 'accounts-salary-page',
+        balance: 'balance-page',
+        deposits: 'deposits-page',
+        cards: 'cards-page',
+        about: 'about-page',
+        contact: 'contact-page'
+      };
+
+      if (page === 'logout') {
+        alert('Logged out!');
+        showNavbars(false);
+        navigate('login');
+        return;
+      }
+
+      if (pages[page]) {
+        document.getElementById(pages[page]).classList.remove('hidden');
+        const isPrivate = !['login', 'signup', 'forgot', 'about', 'contact'].includes(page);
+        showNavbars(isPrivate);
+
+        if (page === 'accounts-savings') renderAccountTable('savings');
+        else if (page === 'accounts-current') renderAccountTable('current');
+        else if (page === 'accounts-salary') renderAccountTable('salary');
+        else if (page === 'balance') populateAccountDropdown();
+        else if (page === 'deposits') populateDepositDropdown();
+        else if (page === 'cards') {
+          populateDebitAccountDropdown();
+          populateDebitApplyAccountDropdown();
+        }
+      }
+    }
+
+    function showCardOptions() {
+      const selected = document.querySelector('input[name="card-type"]:checked').value;
+      document.getElementById("creditCardOptions").style.display = selected === "credit" ? "block" : "none";
+      document.getElementById("debitCardOptions").style.display = selected === "debit" ? "block" : "none";
+      document.getElementById("debit-view-section").style.display = "none";
+      document.getElementById("debit-apply-section").style.display = "none";
+      document.getElementById("credit-card-details").innerHTML = "";
+      document.getElementById("debit-card-details").innerHTML = "";
+      document.getElementById("debit-ok-button").style.display = "none";
+      document.getElementById("debit-message").innerHTML = "";
+      document.getElementById("debit-status-message").innerHTML = "";
+      document.getElementById("debit-terms").checked = false;
+      document.getElementById("debit-fee").checked = false;
+    }
+
+    function showCreditCardDetails() {
+      const select = document.getElementById('credit-card-select');
+      const detailsDiv = document.getElementById('credit-card-details');
+      const value = select.value;
+
+      if (!value) {
+        detailsDiv.innerHTML = "";
+        return;
+      }
+
+      const cards = {
+        premium: {
+          name: "Premium Credit Card",
+          image: "premium_card.jpg", // Replace with actual Premium card image URL or path
+          details: `
+            Annual Fee: ₹2000<br>
+            Credit Limit: ₹5,00,000<br>
+            Rewards: 2% cashback on all purchases<br>
+            Benefits: Travel insurance, airport lounge access
+          `
+        },
+        platinum: {
+          name: "Platinum Credit Card",
+          image: "platinum_card.jpg", // Replace with actual Platinum card image URL or path
+          details: `
+            Annual Fee: ₹5000<br>
+            Credit Limit: ₹10,00,000<br>
+            Rewards: 3% cashback on international purchases<br>
+            Benefits: Concierge service, priority pass
+          `
+        }
+      };
+
+      const card = cards[value];
+      detailsDiv.innerHTML = `
+        <h4>${card.name}</h4>
+        <img src="${card.image}" alt="${card.name}" class="card-image">
+        <p>${card.details}</p>
+      `;
+    }
+
+    function showDebitOptions() {
+      const selected = document.querySelector('input[name="debit-action"]:checked').value;
+      document.getElementById("debit-view-section").style.display = selected === "view" ? "block" : "none";
+      document.getElementById("debit-apply-section").style.display = selected === "apply" ? "block" : "none";
+      document.getElementById("debit-card-details").innerHTML = "";
+      document.getElementById("debit-ok-button").style.display = "none";
+      document.getElementById("debit-message").innerHTML = "";
+      document.getElementById("debit-status-message").innerHTML = "";
+      document.getElementById("debit-terms").checked = false;
+      document.getElementById("debit-fee").checked = false;
+      document.getElementById("apply-button").disabled = false;
+      document.getElementById("cancel-button").disabled = false;
+      document.getElementById("debit-apply-account-select").value = "";
+    }
+
+    function populateDebitAccountDropdown() {
+      const select = document.getElementById('debit-account-select');
+      select.innerHTML = '<option value="">-- Choose Account --</option>';
+      allAccounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${account.name} (${account.acNo})`;
+        select.appendChild(option);
+      });
+    }
+
+    function populateDebitApplyAccountDropdown() {
+      const select = document.getElementById('debit-apply-account-select');
+      select.innerHTML = '<option value="">-- Choose Account --</option>';
+      applyCardAccounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${account.name} (${account.acNo})`;
+        select.appendChild(option);
+      });
+    }
+
+    function checkDebitCardStatus() {
+      const select = document.getElementById('debit-apply-account-select');
+      const statusDiv = document.getElementById('debit-status-message');
+      const termsCheckbox = document.getElementById('debit-terms');
+      const feeCheckbox = document.getElementById('debit-fee');
+      const applyButton = document.getElementById('apply-button');
+      const cancelButton = document.getElementById('cancel-button');
+      const index = select.value;
+
+      statusDiv.innerHTML = "";
+      termsCheckbox.disabled = false;
+      feeCheckbox.disabled = false;
+      applyButton.disabled = false;
+      cancelButton.disabled = false;
+      termsCheckbox.checked = false;
+      feeCheckbox.checked = false;
+
+      if (!index) {
+        termsCheckbox.disabled = true;
+        feeCheckbox.disabled = true;
+        applyButton.disabled = true;
+        cancelButton.disabled = true;
+        return;
+      }
+
+      const account = applyCardAccounts[parseInt(index)];
+      if (account.hasDebitCard) {
+        statusDiv.style.color = "red";
+        statusDiv.innerHTML = "⚠️ This account already has a debit card";
+        termsCheckbox.disabled = true;
+        feeCheckbox.disabled = true;
+        applyButton.disabled = true;
+        cancelButton.disabled = false;
+      } else {
+        statusDiv.style.color = "green";
+        statusDiv.innerHTML = "✅ Eligible to apply for a debit card";
+      }
+    }
+
+    function showDebitCardDetails() {
+      const select = document.getElementById('debit-account-select');
+      const detailsDiv = document.getElementById('debit-card-details');
+      const okButton = document.getElementById('debit-ok-button');
+      const index = select.value;
+
+      if (!index) {
+        detailsDiv.innerHTML = "";
+        okButton.style.display = "none";
+        return;
+      }
+
+      const account = allAccounts[parseInt(index)];
+      if (account.hasDebitCard) {
+        detailsDiv.innerHTML = `
+          <h4>Debit Card Details</h4>
+          <img src="https://via.placeholder.com/200x120?text=Debit+Card" alt="Debit Card" class="card-image">
+          <p>
+            Account Holder: ${account.name}<br>
+            Account Number: ${account.acNo}<br>
+            Card Number: XXXX-XXXX-XXXX-${account.acNo.slice(-4)}<br>
+            Expiry: 12/28<br>
+            Card Type: Visa
+          </p>
+        `;
+        okButton.style.display = "block";
+      } else {
+        detailsDiv.innerHTML = `<p style="color: red;">⚠️ No active debit card for this account</p>`;
+        okButton.style.display = "block";
+      }
+    }
+
+    function closeDebitDetails() {
+      document.getElementById('debit-card-details').innerHTML = "";
+      document.getElementById('debit-ok-button').style.display = "none";
+      document.getElementById('debit-account-select').value = "";
+    }
+
+    function applyDebitCard() {
+      const select = document.getElementById('debit-apply-account-select');
+      const terms = document.getElementById('debit-terms').checked;
+      const fee = document.getElementById('debit-fee').checked;
+      const messageDiv = document.getElementById('debit-message');
+      const statusDiv = document.getElementById('debit-status-message');
+      const index = select.value;
+
+      if (!index) {
+        messageDiv.style.color = "red";
+        messageDiv.innerHTML = "⚠️ Please select an account";
+        return;
+      }
+
+      const account = applyCardAccounts[parseInt(index)];
+      if (account.hasDebitCard) {
+        messageDiv.style.color = "red";
+        messageDiv.innerHTML = "⚠️ This account already has a debit card";
+        return;
+      }
+
+      if (!terms || !fee) {
+        messageDiv.style.color = "red";
+        messageDiv.innerHTML = "⚠️ Please agree to both terms and fee";
+        return;
+      }
+
+      account.hasDebitCard = true;
+      messageDiv.style.color = "green";
+      messageDiv.innerHTML = "✅ Debit card application successful!";
+      statusDiv.innerHTML = "";
+      setTimeout(() => {
+        messageDiv.innerHTML = "";
+        document.getElementById('debit-apply-account-select').value = "";
+        document.getElementById('debit-terms').checked = false;
+        document.getElementById('debit-fee').checked = false;
+        populateDebitApplyAccountDropdown();
+        checkDebitCardStatus();
+      }, 2000);
+    }
+
+    function cancelDebitCard() {
+      const messageDiv = document.getElementById('debit-message');
+      const statusDiv = document.getElementById('debit-status-message');
+      messageDiv.style.color = "red";
+      messageDiv.innerHTML = "⚠️ Debit card application cancelled";
+      statusDiv.innerHTML = "";
+      setTimeout(() => {
+        messageDiv.innerHTML = "";
+        document.getElementById('debit-apply-account-select').value = "";
+        document.getElementById('debit-terms').checked = false;
+        document.getElementById('debit-fee').checked = false;
+        checkDebitCardStatus();
+      }, 2000);
+    }
+
+    function renderAccountTable(type) {
+      const containerId = `accounts-${type}-page`;
+      const container = document.getElementById(containerId);
+      const data = accountData[type] || [];
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Account Holder Name</th>
+              <th>Account No</th>
+              <th>Created On</th>
+              <th>Current Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      data.forEach((user, index) => {
+        html += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${user.name}</td>
+            <td>${user.acNo}</td>
+            <td>${user.createdOn}</td>
+            <td>₹${user.balance.toLocaleString()}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      container.querySelector('.info-card').innerHTML = `<h2>${type.charAt(0).toUpperCase() + type.slice(1)} Account</h2><p>Details about your ${type} account will appear here.</p>${html}`;
+    }
+
+    function login() {
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+      if (users[user] && users[user] === pass) {
+        alert(`Welcome ${user}!`);
+        navigate('home');
+      } else {
+        alert('Invalid credentials or user not registered');
+      }
+    }
+
+    function signup() {
+      const newUser = document.getElementById('new-username').value;
+      const newPass = document.getElementById('new-password').value;
+      if (newUser && newPass) {
+        if (users[newUser]) {
+          alert('User already exists');
+        } else {
+          users[newUser] = newPass;
+          alert('User registered successfully!');
+          navigate('login');
+        }
+      } else {
+        alert('Please fill all fields');
+      }
+    }
+
+    function recoverPassword() {
+      const user = document.getElementById('forgot-username').value;
+      if (users[user]) {
+        alert(`Your password is: ${users[user]}`);
+      } else {
+        alert('User not found!');
+      }
+    }
+
+    function populateDepositDropdown() {
+      const select = document.getElementById('deposit-account-select');
+      select.innerHTML = '<option value="">-- Choose Account --</option>';
+      allAccounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = account.acNo;
+        select.appendChild(option);
+      });
+    }
+
+    function depositAmount() {
+      const depositSelect = document.getElementById('deposit-account-select');
+      const amount = parseFloat(document.getElementById('deposit-amount').value);
+      const terms = document.getElementById('agreeTerms').checked;
+
+      if (!depositSelect.value || isNaN(amount) || amount <= 0 || !terms) {
+        alert('Please select an account, enter a valid amount, and agree to the terms');
+        return;
+      }
+
+      const accountIndex = parseInt(depositSelect.value);
+      const account = allAccounts[accountIndex];
+      account.balance += amount;
+      document.getElementById('deposit-message').innerHTML = `✅ Deposit Successful! New Balance: ₹${account.balance.toLocaleString()}`;
+      document.getElementById('deposit-amount').value = "";
+      document.getElementById('agreeTerms').checked = false;
+    }
+
+    function toggleDepositFields(type) {
+      const depositFields = document.getElementById('deposit-fields');
+      if (type === 'fixed' || type === 'recurring') {
+        depositFields.style.display = 'block';
+      }
+    }
+
+    function populateAccountDropdown() {
+      const accountSelect = document.getElementById('account-select');
+      accountSelect.innerHTML = '<option value="">-- Choose Account --</option>';
+      allAccounts.forEach((account, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `${account.name} (${account.acNo})`;
+        accountSelect.appendChild(option);
+      });
+    }
+
+    function checkBalance() {
+      const index = document.getElementById('account-select').value;
+      const resultDiv = document.getElementById('balance-result');
+      const popupDiv = document.getElementById('popup-message');
+      const printOption = document.getElementById('print-option');
+      const statementMsg = document.getElementById('statement-message');
+
+      if (index === "") {
+        resultDiv.innerHTML = "";
+        popupDiv.innerHTML = "";
+        printOption.style.display = "none";
+        statementMsg.innerHTML = "";
+        return;
+      }
+
+      const account = allAccounts[parseInt(index)];
+      resultDiv.innerHTML = `Balance: ₹${account.balance.toLocaleString()}`;
+
+      if (account.balance < 1000) {
+        popupDiv.style.color = "red";
+        popupDiv.innerHTML = "⚠️ Please maintain a minimum balance of ₹1000";
+      } else {
+        popupDiv.style.color = "green";
+        popupDiv.innerHTML = "✅ Balance is sufficient";
+      }
+
+      printOption.style.display = "block";
+      statementMsg.innerHTML = "";
+    }
+
+    function printStatement() {
+      const index = document.getElementById('account-select').value;
+      if (index === "") return;
+
+      const account = allAccounts[parseInt(index)];
+      const content = `
+CodeTantra Bank - Account Statement
+
+Account Holder Name: ${account.name}
+Account Number      : ${account.acNo}
+Account Created On  : ${account.createdOn}
+Current Balance     : ₹${account.balance.toLocaleString()}
+
+Note: This is a system-generated statement.
+`;
+
+      const blob = new Blob([content], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `${account.acNo}_statement.txt`;
+      link.click();
+
+      document.getElementById('statement-message').innerHTML = "✅ Statement downloaded";
+    }
+  </script>
+</body>
+</html>
